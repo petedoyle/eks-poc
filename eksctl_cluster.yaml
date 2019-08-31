@@ -1,0 +1,32 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: poc1
+  region: us-west-2
+  version: "1.13"
+
+nodeGroups:
+  - name: ng1-public-2a
+    instanceType: m5.large
+    availabilityZones: ["us-west-2a"]
+    desiredCapacity: 1
+    maxSize: 3
+    minSize: 1
+    iam:
+      withAddonPolicies:
+        imageBuilder: true
+        certManager: true
+        ebs: true
+        albIngress: true
+        xRay: true
+        cloudWatch: true
+
+cloudWatch:
+  clusterLogging:
+    enableTypes:
+      - "api"
+      - "audit"
+      - "authenticator"
+      - "controllerManager"
+      - "scheduler"
